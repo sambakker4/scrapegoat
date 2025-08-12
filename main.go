@@ -5,9 +5,10 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
+
 
 	"github.com/gocolly/colly/v2"
+	"github.com/sambakker4/scrapegoat/internal/parsing"
 )
 
 type config struct {
@@ -31,7 +32,7 @@ func main() {
 	for {
 		fmt.Printf("> ")
 		scanner.Scan()
-		cleanedInput := cleanInput(scanner.Text())
+		cleanedInput := parsing.CleanInput(scanner.Text())
 		if len(cleanedInput) == 0 {
 			continue
 		}
@@ -54,10 +55,6 @@ func newCollector() *colly.Collector {
 	return collector
 }
 
-func cleanInput(text string) []string {
-	lowercaseText := strings.ToLower(text)
-	return strings.Fields(lowercaseText)
-}
 
 func isValidURL(url string) bool {
 	client := &http.Client{}
